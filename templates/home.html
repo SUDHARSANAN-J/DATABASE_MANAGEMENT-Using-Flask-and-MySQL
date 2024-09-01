@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        <h4> 
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </h4>
+        <table>
+            <tr>
+                <td>
+                    <a href="{{url_for("addUsers")}}" class="btn new-user-btn">New User</a>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in datas %}
+                <tr>
+                    <td>{{ user.ID }}</td>
+                    <td>{{ user.NAME }}</td>
+                    <td>{{ user.AGE }}</td>
+                    <td>{{ user.CITY }}</td>
+                    <td>
+                        <a href="{{ url_for('editUser',id=user.ID) }}" class="btn edit-btn">Edit</a>
+                        <a onclick="return confirm('Are you sure to delete?');" href="{{ url_for('deleteUser',id=user.ID )}}" class="btn delete-btn">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
